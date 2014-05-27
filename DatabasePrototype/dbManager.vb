@@ -12,6 +12,7 @@ Public Class dbManager
         Public Size As String
         Public Value As Object
         Public Primary As Boolean = False
+        Public NotNull As Boolean = False
 
 
         Sub New(ByVal name As String, ByVal value As Object)
@@ -22,12 +23,13 @@ Public Class dbManager
         End Sub
 
 
-        Sub New(name As String, type As String, Optional size As String = "", Optional primary As Boolean = False)
+        Sub New(name As String, type As String, notNull As Boolean, Optional size As String = "", Optional primary As Boolean = False)
 
             Me.Name = name
             Me.Type = type
             Me.Size = size
-            Me.Primary = primary
+            Me.NotNull = NotNull
+            Me.Primary = Primary
 
         End Sub
 
@@ -93,7 +95,6 @@ Public Class dbManager
     Private Function GetFieldsString(ByVal fields As List(Of dbTableField)) As String
 
         Dim result As String = ""
-        Dim primaryField As String = ""
 
         'Loop through the fields
         For Each f As dbTableField In fields
@@ -105,10 +106,14 @@ Public Class dbManager
                 result &= " " & f.Name & " " & f.Type
             End If
 
+            'Check if they want null or not
+            If f.NotNull Then
+                result &= " NOT NULL "
+            End If
+
             'Is it primary
             If f.Primary Then
-                result &= " NOT NULL AUTO_INCREMENT"
-                primaryField = f.Name
+                result &= " PRIMARY KEY "
             End If
 
 
@@ -117,14 +122,7 @@ Public Class dbManager
 
         Next
 
-        'Add in the primary allocation
-        If primaryField <> "" Then
-            result &= "PRIMARY KEY (" & primaryField & ")"
-        Else
-            result = result.Substring(0, result.Length - 1)
-        End If
-
-        Return result
+        Return result.Substring(0, result.Length - 1)
 
     End Function
 
@@ -133,7 +131,7 @@ Public Class dbManager
 
         Try
 
-            _connection.Open()
+            OpenConnection()
 
             'Ensure it doesn't exist first
             Dim dbSchema As DataTable = _connection.GetOleDbSchemaTable(OleDb.OleDbSchemaGuid.Tables, New Object() {Nothing, Nothing, table, "TABLE"})
@@ -145,7 +143,7 @@ Public Class dbManager
                 cmd.ExecuteNonQuery()
             End If
 
-            _connection.Close()
+            CloseConnection()
 
             Return True
 
@@ -195,14 +193,14 @@ Public Class dbManager
             Try
 
                 'Check table exists
-                _connection.Open()
+                OpenConnection()
 
                 'Add in the data
                 Dim q As String = "INSERT INTO " & table & "(" & GetColumnNames(data) & ")" & " VALUES " & "(" & GetValues(data) & ")"
                 Dim cmd As New OleDb.OleDbCommand(q, _connection)
                 cmd.ExecuteNonQuery()
 
-                _connection.Close()
+                CloseConnection()
 
                 Return True
 
@@ -228,21 +226,22 @@ Public Class dbManager
             Dim fields As String = "*"
 
             'If specified the get all
-            If columns.Count > 0 Then
-                fields = ""
+            If columns IsNot Nothing Then
 
-                For Each column As String In columns
-                    fields = column & ","
-                Next
+                If columns.Count > 0 Then
+                    fields = ""
 
-                'Snip off the end
-                fields = fields.Substring(0, fields.Length - 1)
+                    For Each column As String In columns
+                        fields = column & ","
+                    Next
+
+                    'Snip off the end
+                    fields = fields.Substring(0, fields.Length - 1)
+                End If
 
             End If
 
             Try
-
-                _connection.Open()
 
                 Dim q As String = "SELECT " & fields & " FROM " & table
 
@@ -252,10 +251,11 @@ Public Class dbManager
                 End If
 
                 'Execute the sql
+                OpenConnection()
                 Dim cmd As New OleDb.OleDbCommand(q, _connection)
-                _connection.Close()
+                Dim result As OleDbDataReader = cmd.ExecuteReader()
 
-                Return cmd.ExecuteReader()
+                Return result
 
             Catch ex As Exception
                 MsgBox(ex.Message)
@@ -268,5 +268,122 @@ Public Class dbManager
         End If
 
     End Function
+
+
+    Private Function GetUpdateColumns(columns As List(Of dbTableField)) As String
+
+        Dim result As String = ""
+
+        For Each column As dbTableField In columns
+            result = column.Name & "='" & column.Value & "',"
+        Next
+
+        Return result.Substring(0, result.Length - 1)
+
+    End Function
+
+
+    Function UpdateRow(table As String, columns As List(Of dbTableField), whereClause As String) As Boolean
+
+        'Ensure we have a table name
+        If table.Trim.Length > 0 Then
+
+            Try
+
+                Dim q As String = "UPDATE " & table & " SET "
+
+                'Ensure we have columns to work with
+                If columns IsNot Nothing Then
+                    If columns.Count > 0 Then
+
+                        'Break the columns up
+                        q &= GetUpdateColumns(columns)
+
+                    Else
+                        Return False
+                    End If
+                Else
+                    Return False
+                End If
+
+
+                If whereClause.Trim.Length > 0 Then
+
+                    'Add on the where clause
+                    q &= " WHERE " & whereClause
+
+                End If
+
+                'Open the connection and execute
+                OpenConnection()
+
+                Dim cmd As New OleDb.OleDbCommand(q, _connection)
+                cmd.ExecuteNonQuery()
+
+                CloseConnection()
+
+                Return True
+
+            Catch ex As Exception
+                MsgBox(ex.Message)
+                Return False
+            End Try
+
+        Else
+            Return False
+        End If
+
+    End Function
+
+
+    Function DeleteRow(table As String, whereClause As String) As Boolean
+
+        If table.Trim.Length > 0 And whereClause.Trim.Length > 0 Then
+
+            Try
+
+                'Setup the query string
+                Dim q As String = "DELETE FROM " & table & " WHERE " & whereClause
+
+                'Do the work
+                OpenConnection()
+
+                Dim cmd As New OleDb.OleDbCommand(q, _connection)
+                cmd.ExecuteNonQuery()
+
+                CloseConnection()
+
+                Return True
+
+            Catch ex As Exception
+                MsgBox(ex.Message)
+                Return False
+            End Try
+
+        Else
+            Return False
+        End If
+
+    End Function
+
+
+    Private Sub OpenConnection()
+
+        If _connection.State = ConnectionState.Open Then
+            _connection.Close()
+        End If
+
+        'Now open
+        _connection.Open()
+
+    End Sub
+
+
+    Private Sub CloseConnection()
+
+        _connection.Close()
+
+    End Sub
+
 
 End Class

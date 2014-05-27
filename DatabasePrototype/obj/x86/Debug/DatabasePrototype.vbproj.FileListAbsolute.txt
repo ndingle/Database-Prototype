@@ -17,7 +17,6 @@ D:\Dropbox\Projects\VB\Class Programs\DatabasePrototype\DatabasePrototype\obj\x8
 D:\Dropbox\Projects\VB\Class Programs\DatabasePrototype\DatabasePrototype\bin\Debug\DatabasePrototype.exe
 D:\Dropbox\Projects\VB\Class Programs\DatabasePrototype\DatabasePrototype\bin\Debug\DatabasePrototype.pdb
 D:\Dropbox\Projects\VB\Class Programs\DatabasePrototype\DatabasePrototype\bin\Debug\DatabasePrototype.xml
-D:\Dropbox\Projects\VB\Class Programs\DatabasePrototype\DatabasePrototype\obj\x86\Debug\DatabasePrototype.Form1.resources
 D:\Dropbox\Projects\VB\Class Programs\DatabasePrototype\DatabasePrototype\obj\x86\Debug\DatabasePrototype.Resources.resources
 D:\Dropbox\Projects\VB\Class Programs\DatabasePrototype\DatabasePrototype\obj\x86\Debug\DatabasePrototype.vbproj.GenerateResource.Cache
 C:\Users\Nicholas\Documents\Database-Prototype\DatabasePrototype\obj\x86\Debug\Interop.ADOX.dll
@@ -31,3 +30,4 @@ C:\Users\Nicholas\Documents\Database-Prototype\DatabasePrototype\obj\x86\Debug\D
 C:\Users\Nicholas\Documents\Database-Prototype\DatabasePrototype\obj\x86\Debug\DatabasePrototype.Resources.resources
 C:\Users\Nicholas\Documents\Database-Prototype\DatabasePrototype\obj\x86\Debug\DatabasePrototype.vbproj.GenerateResource.Cache
 C:\Users\Nicholas\Documents\Database-Prototype\DatabasePrototype\obj\x86\Debug\DatabasePrototype.exe
+D:\Dropbox\Projects\VB\Class Programs\DatabasePrototype\DatabasePrototype\obj\x86\Debug\DatabasePrototype.frmMain.resources

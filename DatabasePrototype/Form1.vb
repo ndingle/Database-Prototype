@@ -1,21 +1,28 @@
-﻿Public Class Form1
+﻿Public Class frmMain
 
-    Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    'Create the database
+    Dim db As New dbManager
 
-        'Create the database
-        Dim test As New dbManager
+    Private Sub CreateDatabase()
 
-        test.CreateDatabase("Test.mdb")
-        'test.OpenDatabase("Test.mdb")
+        db.CreateDatabase("myDatabase.mdb")
 
+        'Create a table with primary fields
         Dim fields As New List(Of dbManager.dbTableField)
-        fields.Add(New dbManager.dbTableField("ID", "int", "", True))
-        fields.Add(New dbManager.dbTableField("Title", "TEXT", "4"))
-        fields.Add(New dbManager.dbTableField("Firstname", "TEXT", "25"))
-        fields.Add(New dbManager.dbTableField("Lastname", "TEXT", "25"))
+        fields.Add(New dbManager.dbTableField("ID", "AUTOINCREMENT", False, "", True))
+        fields.Add(New dbManager.dbTableField("Title", "varchar", False, "4"))
+        fields.Add(New dbManager.dbTableField("Firstname", "varchar", False, "25"))
+        fields.Add(New dbManager.dbTableField("Lastname", "varchar", False, "25"))
+        fields.Add(New dbManager.dbTableField("Address", "varchar", False, "150"))
+        fields.Add(New dbManager.dbTableField("Suburb", "varchar", False, "50"))
+        fields.Add(New dbManager.dbTableField("State", "varchar", False, "3"))
+        fields.Add(New dbManager.dbTableField("Postcode", "varchar", False, "4"))
+        fields.Add(New dbManager.dbTableField("Country", "varchar", False, "25"))
 
-        test.CreateTable("test", fields)
+        'OK, time to add the actual table then ay
+        db.CreateTable("Customers", fields)
 
+        'Add 10 random fields ay
         For i = 0 To 9
 
             'Dim fields As New List(Of dbManager.dbTableField)
@@ -23,13 +30,164 @@
             fields.Add(New dbManager.dbTableField("Title", "Mr"))
             fields.Add(New dbManager.dbTableField("Firstname", "Testy"))
             fields.Add(New dbManager.dbTableField("Lastname", "Test" & i))
-            test.AddRow("test", fields)
+            db.AddRow("Customers", fields)
 
         Next
 
-        
+    End Sub
 
 
+    Private Sub RefreshListView()
+
+        'Remove the existing items
+        lvCustomers.Items.Clear()
+
+        'Get the table info
+        Dim reader As OleDb.OleDbDataReader = db.GetRows("Customers")
+
+        If reader IsNot Nothing Then
+
+            While reader.Read
+
+                'Create a new row data
+                Dim columns(3) As String
+
+                columns(0) = reader("ID")
+                columns(1) = reader("Title")
+                columns(2) = reader("Firstname")
+                columns(3) = reader("Lastname")
+
+                'Create the row item and add
+                Dim lvItem As New ListViewItem(columns)
+                lvCustomers.Items.Add(lvItem)
+
+            End While
+
+            reader.Close()
+
+        End If
+
+    End Sub
+
+
+    Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+
+        If IO.File.Exists("myDatabase.mdb") Then
+            db.OpenDatabase("myDatabase.mdb")
+        Else
+            CreateDatabase()
+        End If
+
+        'Get all the data and read it into our awesome table
+        RefreshListView()
+
+    End Sub
+
+    Private Sub lvCustomers_ColumnWidthChanged(sender As Object, e As ColumnWidthChangedEventArgs) Handles lvCustomers.ColumnWidthChanged
+        If lvCustomers.Columns(0).Width > 0 Then lvCustomers.Columns(0).Width = 0
+    End Sub
+
+    Private Sub lvCustomers_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles lvCustomers.MouseDoubleClick
+
+        'Update the selected field
+        Dim lvitem As ListViewItem = lvCustomers.GetItemAt(e.Location.X, e.Location.Y)
+        txtID.Text = lvitem.SubItems(0).Text
+
+        txtTitle.Text = lvitem.SubItems(1).Text
+        txtTitle.Tag = lvitem.SubItems(1).Text
+
+        txtFirstname.Text = lvitem.SubItems(2).Text
+        txtFirstname.Tag = lvitem.SubItems(2).Text
+
+        txtLastname.Text = lvitem.SubItems(3).Text
+        txtLastname.Tag = lvitem.SubItems(3).Text
+
+    End Sub
+
+
+    Private Sub UpdateRow(id As Integer)
+
+        Dim lvItem As ListViewItem = Nothing
+
+        'Find the correct row first
+        For i = 0 To lvCustomers.Items.Count - 1
+
+            'Check if the id's match
+            If CInt(lvCustomers.Items(i).SubItems(0).Text) = id Then
+                'FOUND IT!
+                lvItem = lvCustomers.Items(i)
+                Exit For
+            End If
+
+        Next
+
+        'Just ensure that we found something first
+        If lvItem IsNot Nothing Then
+
+            'Update the columns
+            lvItem.SubItems(1).Text = txtTitle.Text
+            lvItem.SubItems(2).Text = txtFirstname.Text
+            lvItem.SubItems(3).Text = txtLastname.Text
+
+            lvItem.Selected = True
+
+        End If
+
+    End Sub
+
+
+    Private Sub btnUpdate_Click(sender As Object, e As EventArgs) Handles btnUpdate.Click
+
+        'Ensure we have an id
+        If txtID.Text.Trim.Length > 0 Then
+
+            'Create a new list of fields
+            Dim fields As New List(Of dbManager.dbTableField)
+
+            'If the field changed, then update
+            If txtTitle.Text <> txtTitle.Tag Then fields.Add(New dbManager.dbTableField("Title", txtTitle.Text))
+            If txtFirstname.Text <> txtFirstname.Tag Then fields.Add(New dbManager.dbTableField("Firstname", txtFirstname.Text))
+            If txtLastname.Text <> txtLastname.Tag Then fields.Add(New dbManager.dbTableField("Lastname", txtLastname.Text))
+
+            'Check that something has changed!
+            If fields.Count > 0 Then
+
+                'OK update then
+                If db.UpdateRow("Customers", fields, "ID=" & CInt(txtID.Text)) Then
+
+                    'Refresh that one row
+                    UpdateRow(CInt(txtID.Text))
+
+                    'Clear out the text boxes
+                    txtID.Clear()
+                    txtTitle.Clear()
+                    txtFirstname.Clear()
+                    txtLastname.Clear()
+
+                End If
+
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
+
+        If lvCustomers.SelectedItems.Count > 0 Then
+
+            'Do they want to delete selected items
+            If MsgBox("Are you sure you want to delete the selected items?", MsgBoxStyle.YesNo, "Confirm Delete") = MsgBoxResult.Yes Then
+
+                'Try to delete the row
+                If db.DeleteRow("Customers", "ID=" & lvCustomers.SelectedItems(0).Text) Then
+                    'OK then delete the list view row
+                    lvCustomers.SelectedItems(0).Remove()
+                End If
+
+            End If
+
+        End If
 
     End Sub
 
