@@ -20,3 +20,14 @@ D:\Dropbox\Projects\VB\Class Programs\DatabasePrototype\DatabasePrototype\bin\De
 D:\Dropbox\Projects\VB\Class Programs\DatabasePrototype\DatabasePrototype\obj\x86\Debug\DatabasePrototype.Form1.resources
 D:\Dropbox\Projects\VB\Class Programs\DatabasePrototype\DatabasePrototype\obj\x86\Debug\DatabasePrototype.Resources.resources
 D:\Dropbox\Projects\VB\Class Programs\DatabasePrototype\DatabasePrototype\obj\x86\Debug\DatabasePrototype.vbproj.GenerateResource.Cache
+C:\Users\Nicholas\Documents\Database-Prototype\DatabasePrototype\obj\x86\Debug\Interop.ADOX.dll
+C:\Users\Nicholas\Documents\Database-Prototype\DatabasePrototype\obj\x86\Debug\DatabasePrototype.vbproj.ResolveComReference.cache
+C:\Users\Nicholas\Documents\Database-Prototype\DatabasePrototype\obj\x86\Debug\DatabasePrototype.xml
+C:\Users\Nicholas\Documents\Database-Prototype\DatabasePrototype\obj\x86\Debug\DatabasePrototype.pdb
+C:\Users\Nicholas\Documents\Database-Prototype\DatabasePrototype\bin\Debug\DatabasePrototype.exe
+C:\Users\Nicholas\Documents\Database-Prototype\DatabasePrototype\bin\Debug\DatabasePrototype.pdb
+C:\Users\Nicholas\Documents\Database-Prototype\DatabasePrototype\bin\Debug\DatabasePrototype.xml
+C:\Users\Nicholas\Documents\Database-Prototype\DatabasePrototype\obj\x86\Debug\DatabasePrototype.Form1.resources
+C:\Users\Nicholas\Documents\Database-Prototype\DatabasePrototype\obj\x86\Debug\DatabasePrototype.Resources.resources
+C:\Users\Nicholas\Documents\Database-Prototype\DatabasePrototype\obj\x86\Debug\DatabasePrototype.vbproj.GenerateResource.Cache
+C:\Users\Nicholas\Documents\Database-Prototype\DatabasePrototype\obj\x86\Debug\DatabasePrototype.exe

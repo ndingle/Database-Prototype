@@ -9,10 +9,11 @@ Public Class dbManager
         Public Value As String
         Public Size As String
 
-        Sub New(ByVal name As String, ByVal value As String)
+        Sub New(ByVal name As String, ByVal value As String, Optional size As String = "")
 
             Me.Name = name
             Me.Value = value
+            Me.Size = size
 
         End Sub
 
@@ -81,7 +82,7 @@ Public Class dbManager
         'Loop through the fields
         For Each f As dbTableField In fields
 
-            result &= " [" & f.Name & "]" & " " & f.Type & "(" & f.Size & "),"
+            result &= " [" & f.Name & "]" & " " & f.Value & "(" & f.Size & "),"
 
         Next
 
@@ -137,7 +138,7 @@ Public Class dbManager
 
         'Go through the columns
         For Each column As dbTableField In data
-            result &= column.Value & ","
+            result &= "'" & column.Value & "',"
         Next
 
         Return result.Substring(0, result.Length - 1)
@@ -158,7 +159,7 @@ Public Class dbManager
                 _connection.Open()
 
                 'Add in the data
-                Dim q As String = "INSERT ONTO " & table & "(" & GetColumnNames(data) & ")" & " VALUES " & "(" & GetValues(data) & ")"
+                Dim q As String = "INSERT INTO " & table & "(" & GetColumnNames(data) & ")" & " VALUES " & "(" & GetValues(data) & ")"
                 Dim cmd As New OleDb.OleDbCommand(q, _connection)
                 cmd.ExecuteNonQuery()
 

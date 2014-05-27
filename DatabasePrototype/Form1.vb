@@ -8,13 +8,18 @@
         test.CreateDatabase("H:\Test.mdb")
         'test.OpenDatabase("H:\Test.mdb")
 
-        Dim fields As New List(Of dbManager.dbNewTableField)
-        fields.Add(New dbManager.dbNewTableField("Title", "TEXT", "4"))
-        fields.Add(New dbManager.dbNewTableField("Firstname", "TEXT", "25"))
-        fields.Add(New dbManager.dbNewTableField("Lastname", "TEXT", "25"))
+        Dim fields As New List(Of dbManager.dbTableField)
+        fields.Add(New dbManager.dbTableField("Title", "TEXT", "4"))
+        fields.Add(New dbManager.dbTableField("Firstname", "TEXT", "25"))
+        fields.Add(New dbManager.dbTableField("Lastname", "TEXT", "25"))
 
         test.CreateTable("test", fields)
-        test.Test()
+
+        fields = New List(Of dbManager.dbTableField)
+        fields.Add(New dbManager.dbTableField("Title", "Mr"))
+        fields.Add(New dbManager.dbTableField("Firstname", "Testy"))
+        fields.Add(New dbManager.dbTableField("Lastname", "Test"))
+        test.AddRow("test", fields)
 
     End Sub
 
