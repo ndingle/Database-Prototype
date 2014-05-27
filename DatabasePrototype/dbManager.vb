@@ -3,27 +3,11 @@ Imports System.Data.OleDb
 
 Public Class dbManager
 
-    Public Class dbNewTableField
-
-        Public Name As String
-        Public Type As String
-        Public Size As String
-
-        Sub New(ByVal name As String, ByVal type As String, ByVal size As String)
-
-            Me.Name = name
-            Me.Type = type
-            Me.Size = size
-
-        End Sub
-
-    End Class
-
-
     Public Class dbTableField
 
         Public Name As String
         Public Value As String
+        Public Size As String
 
         Sub New(ByVal name As String, ByVal value As String)
 
@@ -90,12 +74,12 @@ Public Class dbManager
     End Sub
 
 
-    Private Function GetFieldsString(ByVal fields As List(Of dbNewTableField)) As String
+    Private Function GetFieldsString(ByVal fields As List(Of dbTableField)) As String
 
         Dim result As String = ""
 
         'Loop through the fields
-        For Each f As dbNewTableField In fields
+        For Each f As dbTableField In fields
 
             result &= " [" & f.Name & "]" & " " & f.Type & "(" & f.Size & "),"
 
@@ -106,7 +90,7 @@ Public Class dbManager
     End Function
 
 
-    Public Function CreateTable(ByVal table As String, ByVal fields As List(Of dbNewTableField)) As Boolean
+    Public Function CreateTable(ByVal table As String, ByVal fields As List(Of dbTableField)) As Boolean
 
         Try
 
@@ -134,30 +118,63 @@ Public Class dbManager
     End Function
 
 
+    Private Function GetColumnNames(data As List(Of dbTableField)) As String
+
+        Dim result As String = ""
+
+        'Go through the columns
+        For Each column As dbTableField In data
+            result &= column.Name & ","
+        Next
+
+        Return result.Substring(0, result.Length - 1)
+
+    End Function
+
+    Private Function GetValues(data As List(Of dbTableField)) As String
+
+        Dim result As String = ""
+
+        'Go through the columns
+        For Each column As dbTableField In data
+            result &= column.Value & ","
+        Next
+
+        Return result.Substring(0, result.Length - 1)
+
+    End Function
+
+
     Function AddRow(table As String, data As List(Of dbTableField)) As Boolean
 
-        'Add the data to the table
+        'Ensure we have enough data first
+        If data.Count > 0 And table.Trim.Length > 0 Then
 
-        Try
+            'Add the data to the table
 
-            'Check table exists
-            _connection.Open()
+            Try
 
-            'Add in the data
+                'Check table exists
+                _connection.Open()
 
+                'Add in the data
+                Dim q As String = "INSERT ONTO " & table & "(" & GetColumnNames(data) & ")" & " VALUES " & "(" & GetValues(data) & ")"
+                Dim cmd As New OleDb.OleDbCommand(q, _connection)
+                cmd.ExecuteNonQuery()
 
-            _connection.Close()
+                _connection.Close()
 
-            Return True
+                Return True
 
-        Catch ex As Exception
+            Catch ex As Exception
 
-            MsgBox(ex.Message)
+                MsgBox(ex.Message)
+                Return False
+
+            End Try
+        Else
             Return False
-
-        End Try
-
-
+        End If
 
     End Function
 
