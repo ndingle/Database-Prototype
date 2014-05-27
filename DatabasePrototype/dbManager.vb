@@ -3,19 +3,34 @@ Imports System.Data.OleDb
 
 Public Class dbManager
 
+
     Public Class dbTableField
 
-        Public Name As String
-        Public Value As String
-        Public Size As String
 
-        Sub New(ByVal name As String, ByVal value As String, Optional size As String = "")
+        Public Name As String
+        Public Type As String
+        Public Size As String
+        Public Value As Object
+        Public Primary As Boolean = False
+
+
+        Sub New(ByVal name As String, ByVal value As Object)
 
             Me.Name = name
             Me.Value = value
-            Me.Size = size
 
         End Sub
+
+
+        Sub New(name As String, type As String, Optional size As String = "", Optional primary As Boolean = False)
+
+            Me.Name = name
+            Me.Type = type
+            Me.Size = size
+            Me.Primary = primary
+
+        End Sub
+
 
     End Class
 
@@ -78,15 +93,38 @@ Public Class dbManager
     Private Function GetFieldsString(ByVal fields As List(Of dbTableField)) As String
 
         Dim result As String = ""
+        Dim primaryField As String = ""
 
         'Loop through the fields
         For Each f As dbTableField In fields
 
-            result &= " [" & f.Name & "]" & " " & f.Value & "(" & f.Size & "),"
+            'Add in the field type
+            If f.Type.ToUpper = "TEXT" Or f.Type.ToUpper = "VARCHAR" Then
+                result &= " " & f.Name & " " & f.Type & "(" & f.Size & ")"
+            Else
+                result &= " " & f.Name & " " & f.Type
+            End If
+
+            'Is it primary
+            If f.Primary Then
+                result &= " NOT NULL AUTO_INCREMENT"
+                primaryField = f.Name
+            End If
+
+
+            'Add the comma
+            result &= ","
 
         Next
 
-        Return result.Substring(0, result.Length - 1)
+        'Add in the primary allocation
+        If primaryField <> "" Then
+            result &= "PRIMARY KEY (" & primaryField & ")"
+        Else
+            result = result.Substring(0, result.Length - 1)
+        End If
+
+        Return result
 
     End Function
 
@@ -131,6 +169,7 @@ Public Class dbManager
         Return result.Substring(0, result.Length - 1)
 
     End Function
+
 
     Private Function GetValues(data As List(Of dbTableField)) As String
 
@@ -180,20 +219,53 @@ Public Class dbManager
     End Function
 
 
-    Function Test()
+    Function GetRows(table As String, Optional columns As List(Of String) = Nothing, Optional condition As String = "") As OleDbDataReader
 
-        _connection.Open()
+        'Ensure we have all the data to start with
+        If table.Trim.Length > 0 Then
 
-        Dim q As String = "SELECT * FROM test"
-        Dim cmd As New OleDb.OleDbCommand(q, _connection)
-        Dim reader As OleDbDataReader = cmd.ExecuteReader()
+            'Default to all columns
+            Dim fields As String = "*"
 
-        While reader.Read()
-            MsgBox(reader.GetString(0) + ", " _
-               + reader.GetString(1))
-        End While
+            'If specified the get all
+            If columns.Count > 0 Then
+                fields = ""
 
-        _connection.Close()
+                For Each column As String In columns
+                    fields = column & ","
+                Next
+
+                'Snip off the end
+                fields = fields.Substring(0, fields.Length - 1)
+
+            End If
+
+            Try
+
+                _connection.Open()
+
+                Dim q As String = "SELECT " & fields & " FROM " & table
+
+                'Add the condition if there is one
+                If condition.Trim.Length > 0 Then
+                    q &= " WHERE " & condition
+                End If
+
+                'Execute the sql
+                Dim cmd As New OleDb.OleDbCommand(q, _connection)
+                _connection.Close()
+
+                Return cmd.ExecuteReader()
+
+            Catch ex As Exception
+                MsgBox(ex.Message)
+                _connection.Close()
+                Return Nothing
+            End Try
+
+        Else
+            Return Nothing
+        End If
 
     End Function
 
