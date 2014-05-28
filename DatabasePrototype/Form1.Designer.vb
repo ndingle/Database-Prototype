@@ -34,8 +34,9 @@ Partial Class frmMain
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.txtID = New System.Windows.Forms.TextBox()
-        Me.btnUpdate = New System.Windows.Forms.Button()
         Me.btnDelete = New System.Windows.Forms.Button()
+        Me.btnAdd = New System.Windows.Forms.Button()
+        Me.btnSave = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'lvCustomers
@@ -86,7 +87,7 @@ Partial Class frmMain
         Me.txtFirstname.Location = New System.Drawing.Point(124, 338)
         Me.txtFirstname.Name = "txtFirstname"
         Me.txtFirstname.Size = New System.Drawing.Size(189, 28)
-        Me.txtFirstname.TabIndex = 1
+        Me.txtFirstname.TabIndex = 2
         '
         'txtLastname
         '
@@ -94,7 +95,7 @@ Partial Class frmMain
         Me.txtLastname.Location = New System.Drawing.Point(124, 373)
         Me.txtLastname.Name = "txtLastname"
         Me.txtLastname.Size = New System.Drawing.Size(189, 28)
-        Me.txtLastname.TabIndex = 1
+        Me.txtLastname.TabIndex = 3
         '
         'Label1
         '
@@ -135,31 +136,42 @@ Partial Class frmMain
         Me.txtID.TabIndex = 3
         Me.txtID.Visible = False
         '
-        'btnUpdate
-        '
-        Me.btnUpdate.Location = New System.Drawing.Point(124, 416)
-        Me.btnUpdate.Name = "btnUpdate"
-        Me.btnUpdate.Size = New System.Drawing.Size(189, 41)
-        Me.btnUpdate.TabIndex = 4
-        Me.btnUpdate.Text = "&Update"
-        Me.btnUpdate.UseVisualStyleBackColor = True
-        '
         'btnDelete
         '
-        Me.btnDelete.Location = New System.Drawing.Point(404, 42)
+        Me.btnDelete.Location = New System.Drawing.Point(404, 74)
         Me.btnDelete.Name = "btnDelete"
         Me.btnDelete.Size = New System.Drawing.Size(86, 27)
-        Me.btnDelete.TabIndex = 5
+        Me.btnDelete.TabIndex = 6
         Me.btnDelete.Text = "Delete?"
         Me.btnDelete.UseVisualStyleBackColor = True
+        '
+        'btnAdd
+        '
+        Me.btnAdd.Location = New System.Drawing.Point(404, 41)
+        Me.btnAdd.Name = "btnAdd"
+        Me.btnAdd.Size = New System.Drawing.Size(86, 27)
+        Me.btnAdd.TabIndex = 5
+        Me.btnAdd.Text = "Add"
+        Me.btnAdd.UseVisualStyleBackColor = True
+        '
+        'btnSave
+        '
+        Me.btnSave.Location = New System.Drawing.Point(124, 407)
+        Me.btnSave.Name = "btnSave"
+        Me.btnSave.Size = New System.Drawing.Size(189, 34)
+        Me.btnSave.TabIndex = 4
+        Me.btnSave.Text = "Save"
+        Me.btnSave.UseVisualStyleBackColor = True
+        Me.btnSave.Visible = False
         '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(526, 474)
+        Me.Controls.Add(Me.btnSave)
+        Me.Controls.Add(Me.btnAdd)
         Me.Controls.Add(Me.btnDelete)
-        Me.Controls.Add(Me.btnUpdate)
         Me.Controls.Add(Me.txtID)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Label2)
@@ -187,7 +199,8 @@ Partial Class frmMain
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents txtID As System.Windows.Forms.TextBox
-    Friend WithEvents btnUpdate As System.Windows.Forms.Button
     Friend WithEvents btnDelete As System.Windows.Forms.Button
+    Friend WithEvents btnAdd As System.Windows.Forms.Button
+    Friend WithEvents btnSave As System.Windows.Forms.Button
 
 End Class

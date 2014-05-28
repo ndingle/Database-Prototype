@@ -367,6 +367,37 @@ Public Class dbManager
     End Function
 
 
+    Function DeleteTable(table As String) As Boolean
+
+        'Check if we have a table
+        If table.Trim.Length > 0 Then
+
+            Try
+
+                'Setup the query
+                Dim q As String = "DROP TABLE " & table
+
+                'Do the work
+                OpenConnection()
+
+                Dim cmd As New OleDb.OleDbCommand(q, _connection)
+                cmd.ExecuteNonQuery()
+
+                CloseConnection()
+
+                Return True
+
+            Catch ex As Exception
+                MsgBox(ex.Message)
+                Return False
+            End Try
+        Else
+            Return False
+        End If
+
+    End Function
+
+
     Private Sub OpenConnection()
 
         If _connection.State = ConnectionState.Open Then

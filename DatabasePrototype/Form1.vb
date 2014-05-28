@@ -9,7 +9,7 @@
 
         'Create a table with primary fields
         Dim fields As New List(Of dbManager.dbTableField)
-        fields.Add(New dbManager.dbTableField("ID", "AUTOINCREMENT", False, "", True))
+        fields.Add(New dbManager.dbTableField("ID", "AUTOINCREMENT", True, "", True))
         fields.Add(New dbManager.dbTableField("Title", "varchar", False, "4"))
         fields.Add(New dbManager.dbTableField("Firstname", "varchar", False, "25"))
         fields.Add(New dbManager.dbTableField("Lastname", "varchar", False, "25"))
@@ -22,10 +22,9 @@
         'OK, time to add the actual table then ay
         db.CreateTable("Customers", fields)
 
-        'Add 10 random fields ay
+        'Add 10 random rows ay
         For i = 0 To 9
 
-            'Dim fields As New List(Of dbManager.dbTableField)
             fields = New List(Of dbManager.dbTableField)
             fields.Add(New dbManager.dbTableField("Title", "Mr"))
             fields.Add(New dbManager.dbTableField("Firstname", "Testy"))
@@ -136,42 +135,6 @@
     End Sub
 
 
-    Private Sub btnUpdate_Click(sender As Object, e As EventArgs) Handles btnUpdate.Click
-
-        'Ensure we have an id
-        If txtID.Text.Trim.Length > 0 Then
-
-            'Create a new list of fields
-            Dim fields As New List(Of dbManager.dbTableField)
-
-            'If the field changed, then update
-            If txtTitle.Text <> txtTitle.Tag Then fields.Add(New dbManager.dbTableField("Title", txtTitle.Text))
-            If txtFirstname.Text <> txtFirstname.Tag Then fields.Add(New dbManager.dbTableField("Firstname", txtFirstname.Text))
-            If txtLastname.Text <> txtLastname.Tag Then fields.Add(New dbManager.dbTableField("Lastname", txtLastname.Text))
-
-            'Check that something has changed!
-            If fields.Count > 0 Then
-
-                'OK update then
-                If db.UpdateRow("Customers", fields, "ID=" & CInt(txtID.Text)) Then
-
-                    'Refresh that one row
-                    UpdateRow(CInt(txtID.Text))
-
-                    'Clear out the text boxes
-                    txtID.Clear()
-                    txtTitle.Clear()
-                    txtFirstname.Clear()
-                    txtLastname.Clear()
-
-                End If
-
-            End If
-
-        End If
-
-    End Sub
-
     Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
 
         If lvCustomers.SelectedItems.Count > 0 Then
@@ -190,6 +153,80 @@
         End If
 
     End Sub
+
+    Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
+
+        'Setup the fields to be a new row
+        txtID.Text = "<NEW>"
+        txtTitle.Clear()
+        txtFirstname.Clear()
+        txtLastname.Clear()
+        btnSave.Visible = True
+
+    End Sub
+
+    Private Sub txtLastname_LostFocus(sender As Object, e As EventArgs) Handles txtLastname.LostFocus, txtFirstname.LostFocus, txtTitle.LostFocus
+
+        'Ensure we have an id
+        If txtID.Text.Trim.Length > 0 And txtID.Text.ToUpper <> "<NEW>" Then
+
+            'Create a new list of fields
+            Dim fields As New List(Of dbManager.dbTableField)
+
+            'If the field changed, then update
+            If txtTitle.Text <> txtTitle.Tag Then fields.Add(New dbManager.dbTableField("Title", txtTitle.Text))
+            If txtFirstname.Text <> txtFirstname.Tag Then fields.Add(New dbManager.dbTableField("Firstname", txtFirstname.Text))
+            If txtLastname.Text <> txtLastname.Tag Then fields.Add(New dbManager.dbTableField("Lastname", txtLastname.Text))
+
+            'Check that something has changed!
+            If fields.Count > 0 Then
+
+                'OK update then
+                If db.UpdateRow("Customers", fields, "ID=" & CInt(txtID.Text)) Then
+
+                    'Refresh that one row
+                    UpdateRow(CInt(txtID.Text))
+
+                End If
+
+            End If
+
+        End If
+
+    End Sub
+
+
+    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+
+        'Check if we are actually in add mode
+        If txtID.Text.ToUpper = "<NEW>" Then
+
+            'Build the list fields
+            Dim fields As New List(Of dbManager.dbTableField)
+            fields.Add(New dbManager.dbTableField("Title", txtTitle.Text))
+            fields.Add(New dbManager.dbTableField("Firstname", txtFirstname.Text))
+            fields.Add(New dbManager.dbTableField("Lastname", txtLastname.Text))
+
+            'Call on the database
+            db.AddRow("Customers", fields)
+
+            'Add to the listview
+            RefreshListView()
+
+            'Select the newly added item
+            lvCustomers.Items(lvCustomers.Items.Count - 1).Selected = True
+
+            'Clear the boxes
+            txtID.Clear()
+            txtTitle.Clear()
+            txtFirstname.Clear()
+            txtLastname.Clear()
+            btnSave.Visible = False
+
+        End If
+
+    End Sub
+
 
 End Class
 
