@@ -8,16 +8,16 @@
         db.CreateDatabase("myDatabase.mdb")
 
         'Create a table with primary fields
-        Dim fields As New List(Of dbManager.dbTableField)
-        fields.Add(New dbManager.dbTableField("ID", "AUTOINCREMENT", True, "", True))
-        fields.Add(New dbManager.dbTableField("Title", "varchar", False, "4"))
-        fields.Add(New dbManager.dbTableField("Firstname", "varchar", False, "25"))
-        fields.Add(New dbManager.dbTableField("Lastname", "varchar", False, "25"))
-        fields.Add(New dbManager.dbTableField("Address", "varchar", False, "150"))
-        fields.Add(New dbManager.dbTableField("Suburb", "varchar", False, "50"))
-        fields.Add(New dbManager.dbTableField("State", "varchar", False, "3"))
-        fields.Add(New dbManager.dbTableField("Postcode", "varchar", False, "4"))
-        fields.Add(New dbManager.dbTableField("Country", "varchar", False, "25"))
+        Dim fields As New dbManager.dbFields
+        fields.Add("ID", "AUTOINCREMENT", True, "", True)
+        fields.Add("Title", "varchar", False, "4")
+        fields.Add("Firstname", "varchar", False, "25")
+        fields.Add("Lastname", "varchar", False, "25")
+        fields.Add("Address", "varchar", False, "150")
+        fields.Add("Suburb", "varchar", False, "50")
+        fields.Add("State", "varchar", False, "3")
+        fields.Add("Postcode", "varchar", False, "4")
+        fields.Add("Country", "varchar", False, "25")
 
         'OK, time to add the actual table then ay
         db.CreateTable("Customers", fields)
@@ -25,10 +25,10 @@
         'Add 10 random rows ay
         For i = 0 To 9
 
-            fields = New List(Of dbManager.dbTableField)
-            fields.Add(New dbManager.dbTableField("Title", "Mr"))
-            fields.Add(New dbManager.dbTableField("Firstname", "Testy"))
-            fields.Add(New dbManager.dbTableField("Lastname", "Test" & i))
+            fields.Reset()
+            fields.Add("Title", "Mr")
+            fields.Add("Firstname", "Testy")
+            fields.Add("Lastname", "Test" & i)
             db.AddRow("Customers", fields)
 
         Next
@@ -174,9 +174,9 @@
             Dim fields As New List(Of dbManager.dbTableField)
 
             'If the field changed, then update
-            If txtTitle.Text <> txtTitle.Tag Then fields.Add(New dbManager.dbTableField("Title", txtTitle.Text))
-            If txtFirstname.Text <> txtFirstname.Tag Then fields.Add(New dbManager.dbTableField("Firstname", txtFirstname.Text))
-            If txtLastname.Text <> txtLastname.Tag Then fields.Add(New dbManager.dbTableField("Lastname", txtLastname.Text))
+            If txtTitle.Text <> txtTitle.Tag Then fields.Add("Title", txtTitle.Text))
+            If txtFirstname.Text <> txtFirstname.Tag Then fields.Add("Firstname", txtFirstname.Text))
+            If txtLastname.Text <> txtLastname.Tag Then fields.Add("Lastname", txtLastname.Text))
 
             'Check that something has changed!
             If fields.Count > 0 Then
@@ -203,9 +203,9 @@
 
             'Build the list fields
             Dim fields As New List(Of dbManager.dbTableField)
-            fields.Add(New dbManager.dbTableField("Title", txtTitle.Text))
-            fields.Add(New dbManager.dbTableField("Firstname", txtFirstname.Text))
-            fields.Add(New dbManager.dbTableField("Lastname", txtLastname.Text))
+            fields.Add("Title", txtTitle.Text))
+            fields.Add("Firstname", txtFirstname.Text))
+            fields.Add("Lastname", txtLastname.Text))
 
             'Call on the database
             db.AddRow("Customers", fields)

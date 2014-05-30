@@ -4,6 +4,54 @@ Imports System.Data.OleDb
 Public Class dbManager
 
 
+    Public Class dbFields
+
+        Dim _fields As List(Of dbTableField)
+
+
+        Default ReadOnly Property Item(index As Integer) As dbTableField
+            Get
+                Return _fields(index)
+            End Get
+        End Property
+
+
+        ReadOnly Property Items As List(Of dbTableField)
+            Get
+                Return _fields
+            End Get
+        End Property
+
+
+        Sub New()
+
+            _fields = New List(Of dbTableField)
+
+        End Sub
+
+        Public Sub Add(ByVal name As String, ByVal value As Object)
+
+            _fields.Add(New dbTableField(name, value))
+
+        End Sub
+
+        Public Sub Add(name As String, type As String, notNull As Boolean, Optional size As String = "", Optional primaryKeyField As Boolean = False)
+
+            _fields.Add(New dbTableField(name, type, notNull, size, primaryKeyField))
+
+        End Sub
+
+
+        Public Sub Reset()
+
+            _fields.Clear()
+
+        End Sub
+
+
+    End Class
+
+
     Public Class dbTableField
 
 
@@ -13,6 +61,7 @@ Public Class dbManager
         Public Value As Object
         Public Primary As Boolean = False
         Public NotNull As Boolean = False
+
 
 
         Sub New(ByVal name As String, ByVal value As Object)
@@ -92,12 +141,12 @@ Public Class dbManager
     End Sub
 
 
-    Private Function GetFieldsString(ByVal fields As List(Of dbTableField)) As String
+    Private Function GetFieldsString(ByVal fields As dbFields) As String
 
         Dim result As String = ""
 
         'Loop through the fields
-        For Each f As dbTableField In fields
+        For Each f As dbTableField In fields.Items
 
             'Add in the field type
             If f.Type.ToUpper = "TEXT" Or f.Type.ToUpper = "VARCHAR" Then
@@ -127,7 +176,7 @@ Public Class dbManager
     End Function
 
 
-    Public Function CreateTable(ByVal table As String, ByVal fields As List(Of dbTableField)) As Boolean
+    Public Function CreateTable(ByVal table As String, ByVal fields As dbFields) As Boolean
 
         Try
 
@@ -155,12 +204,12 @@ Public Class dbManager
     End Function
 
 
-    Private Function GetColumnNames(data As List(Of dbTableField)) As String
+    Private Function GetColumnNames(fields As dbFields) As String
 
         Dim result As String = ""
 
         'Go through the columns
-        For Each column As dbTableField In data
+        For Each column As dbTableField In fields.Items
             result &= column.Name & ","
         Next
 
@@ -169,12 +218,12 @@ Public Class dbManager
     End Function
 
 
-    Private Function GetValues(data As List(Of dbTableField)) As String
+    Private Function GetValues(fields As dbFields) As String
 
         Dim result As String = ""
 
         'Go through the columns
-        For Each column As dbTableField In data
+        For Each column As dbTableField In fields.Items
             result &= "'" & column.Value & "',"
         Next
 
@@ -183,10 +232,10 @@ Public Class dbManager
     End Function
 
 
-    Function AddRow(table As String, data As List(Of dbTableField)) As Boolean
+    Function AddRow(table As String, data As dbFields) As Boolean
 
         'Ensure we have enough data first
-        If data.Count > 0 And table.Trim.Length > 0 Then
+        If data.Items.Count > 0 And table.Trim.Length > 0 Then
 
             'Add the data to the table
 

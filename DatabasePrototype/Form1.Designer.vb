@@ -71,7 +71,7 @@ Partial Class frmMain
         'Lastname
         '
         Me.Lastname.Text = "Lastname"
-        Me.Lastname.Width = 146
+        Me.Lastname.Width = 281
         '
         'txtTitle
         '
