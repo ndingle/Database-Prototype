@@ -1,0 +1,38 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+dbLib
+</name>
+</assembly>
+<members>
+<member name="P:dbLib.My.Resources.Resources.ResourceManager">
+	<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member><member name="P:dbLib.My.Resources.Resources.Culture">
+	<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member><member name="T:dbLib.My.Resources.Resources">
+	<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member><member name="P:dbLib.dbFields.Item(System.Int32)">
+	<summary>
+ Readonly property returns a dbTableField by index
+ </summary>
+	<param name="index">A 0 based array, the index of the field.</param>
+	<value>dbTableField</value>
+	<returns>The specified dbTableField</returns>
+	<remarks>If index is out of range, Nothing is returned</remarks>
+</member><member name="T:dbLib.dbFields">
+	<summary>
+ An object that is sent to dbManager which specifies fields and data. 
+ It's can be used for adding tables, viewing data from tables and more.
+ </summary>
+	<remarks>Uses a list of dbTableField</remarks>
+</member>
+</members>
+</doc>
