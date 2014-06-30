@@ -13,7 +13,7 @@ Public Class dbFields
     ''' <summary>
     ''' Readonly property returns a dbTableField by index
     ''' </summary>
-    ''' <param name="index">A 0 based array, the index of the field.</param>
+    ''' <param name="index">A 0 based array refers to the index of the field.</param>
     ''' <value>dbTableField</value>
     ''' <returns>The specified dbTableField</returns>
     ''' <remarks>If index is out of range, Nothing is returned</remarks>
@@ -49,9 +49,9 @@ Public Class dbFields
     End Sub
 
 
-    Public Sub Add(ByVal name As String, ByVal type As String, ByVal notNull As Boolean, Optional ByVal size As String = "", Optional ByVal primaryKeyField As Boolean = False)
+    Public Sub Add(ByVal name As String, ByVal type As String, ByVal cannotBeNull As Boolean, Optional ByVal size As Integer = 0, Optional ByVal primaryKeyField As Boolean = False, Optional ByVal autoIncrement As Boolean = False)
 
-        _fields.Add(New dbTableField(name, type, notNull, size, primaryKeyField))
+        _fields.Add(New dbTableField(name, type, cannotBeNull, size, primaryKeyField, autoIncrement))
 
     End Sub
 
@@ -74,6 +74,7 @@ Public Class dbTableField
     Public Size As String
     Public Value As Object
     Public Primary As Boolean = False
+    Public AutoIncrement As Boolean = False
     Public NotNull As Boolean = False
 
 
@@ -85,13 +86,14 @@ Public Class dbTableField
     End Sub
 
 
-    Sub New(ByVal name As String, ByVal type As String, ByVal notNull As Boolean, Optional ByVal size As String = "", Optional ByVal primary As Boolean = False)
+    Sub New(ByVal name As String, ByVal type As String, ByVal notNull As Boolean, Optional ByVal size As String = "", Optional ByVal primary As Boolean = False, Optional ByVal autoIncrement As Boolean = False)
 
         Me.Name = name
         Me.Type = type
         Me.Size = size
-        Me.NotNull = NotNull
-        Me.Primary = Primary
+        Me.NotNull = notNull
+        Me.Primary = primary
+        Me.AutoIncrement = autoIncrement
 
     End Sub
 
@@ -176,18 +178,22 @@ Public Class dbManager
                 result &= " NOT NULL "
             End If
 
+            'Is the field automatically incremented 
+            If f.AutoIncrement Then
+                result &= " IDENTITY(1,1) "
+            End If
+
             'Is it primary
             If f.Primary Then
                 result &= " PRIMARY KEY "
             End If
 
-
-            'Add the comma
+            'Add the comma between fields
             result &= ","
 
         Next
 
-        Return result.Substring(0, result.Length - 1)
+        Return result.Substring(0, result.Length - 1).Replace("  ", " ")
 
     End Function
 
@@ -203,7 +209,7 @@ Public Class dbManager
 
             'Is the table there?
             If dbSchema.Rows.Count = 0 Then
-                Dim q As String = "Create Table [" & table & "] (" & GetFieldsString(fields) & ")"
+                Dim q As String = "Create Table " & table & " (" & GetFieldsString(fields) & ")"
                 Dim cmd As New OleDb.OleDbCommand(q, _connection)
                 cmd.ExecuteNonQuery()
             End If
@@ -335,11 +341,11 @@ Public Class dbManager
     End Function
 
 
-    Private Function GetUpdateColumns(columns As List(Of dbTableField)) As String
+    Private Function GetUpdateColumns(ByVal columns As dbFields) As String
 
         Dim result As String = ""
 
-        For Each column As dbTableField In columns
+        For Each column As dbTableField In columns.Items
             result = column.Name & "='" & column.Value & "',"
         Next
 
@@ -348,7 +354,7 @@ Public Class dbManager
     End Function
 
 
-    Function UpdateRow(table As String, columns As List(Of dbTableField), whereClause As String) As Boolean
+    Function UpdateRow(ByVal table As String, ByVal columns As dbFields, ByVal whereClause As String) As Boolean
 
         'Ensure we have a table name
         If table.Trim.Length > 0 Then
@@ -359,7 +365,7 @@ Public Class dbManager
 
                 'Ensure we have columns to work with
                 If columns IsNot Nothing Then
-                    If columns.Count > 0 Then
+                    If columns.Items.Count > 0 Then
 
                         'Break the columns up
                         q &= GetUpdateColumns(columns)

@@ -23,7 +23,7 @@ dbLib
 	<summary>
  Readonly property returns a dbTableField by index
  </summary>
-	<param name="index">A 0 based array, the index of the field.</param>
+	<param name="index">A 0 based array refers to the index of the field.</param>
 	<value>dbTableField</value>
 	<returns>The specified dbTableField</returns>
 	<remarks>If index is out of range, Nothing is returned</remarks>

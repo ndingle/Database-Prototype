@@ -10,4 +10,6 @@ D:\Dropbox\Projects\VB\Class Programs\DatabasePrototype\dbLib_LoginSystem\obj\x8
 D:\Dropbox\Projects\VB\Class Programs\DatabasePrototype\dbLib_LoginSystem\obj\x86\Debug\dbLib_LoginSystem.exe
 D:\Dropbox\Projects\VB\Class Programs\DatabasePrototype\dbLib_LoginSystem\obj\x86\Debug\dbLib_LoginSystem.xml
 D:\Dropbox\Projects\VB\Class Programs\DatabasePrototype\dbLib_LoginSystem\obj\x86\Debug\dbLib_LoginSystem.pdb
-D:\Dropbox\Projects\VB\Class Programs\DatabasePrototype\dbLib_LoginSystem\obj\x86\Debug\dbLib_LoginSystem.Form1.resources
+D:\Dropbox\Projects\VB\Class Programs\DatabasePrototype\dbLib_LoginSystem\obj\x86\Debug\dbLib_LoginSystem.frmMain.resources
+D:\Dropbox\Projects\VB\Class Programs\DatabasePrototype\dbLib_LoginSystem\obj\x86\Debug\dbLib_LoginSystem.frmAddUser.resources
+D:\Dropbox\Projects\VB\Class Programs\DatabasePrototype\dbLib_LoginSystem\obj\x86\Debug\dbLib_LoginSystem.frmLogin.resources
