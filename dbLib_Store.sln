@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "dbLib_Store", "dbLib_Store\dbLib_Store.vbproj", "{58472993-5F58-406F-91BC-507182C7ED70}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "dbLib", "dbLib\dbLib.vbproj", "{039782EC-694B-4399-BBF0-EDFE2E47EF5C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{58472993-5F58-406F-91BC-507182C7ED70}.Debug|x86.ActiveCfg = Debug|x86
+		{58472993-5F58-406F-91BC-507182C7ED70}.Debug|x86.Build.0 = Debug|x86
+		{58472993-5F58-406F-91BC-507182C7ED70}.Release|x86.ActiveCfg = Release|x86
+		{58472993-5F58-406F-91BC-507182C7ED70}.Release|x86.Build.0 = Release|x86
+		{039782EC-694B-4399-BBF0-EDFE2E47EF5C}.Debug|x86.ActiveCfg = Debug|x86
+		{039782EC-694B-4399-BBF0-EDFE2E47EF5C}.Debug|x86.Build.0 = Debug|x86
+		{039782EC-694B-4399-BBF0-EDFE2E47EF5C}.Release|x86.ActiveCfg = Release|x86
+		{039782EC-694B-4399-BBF0-EDFE2E47EF5C}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

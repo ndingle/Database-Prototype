@@ -107,7 +107,7 @@ Public Class dbManager
     Private _connection As OleDb.OleDbConnection
 
 
-    Public Function GetConnectionString(ByVal database As String, Optional ByVal version As Boolean = True)
+    Private Function GetConnectionString(ByVal database As String, Optional ByVal version As Boolean = True)
         If version Then
             Return "Provider=Microsoft.Jet.OLEDB.4.0;" &
                        "Data Source=" & database & ";" &
