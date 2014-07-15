@@ -1,0 +1,13 @@
+D:\Dropbox\Projects\VB\Class Programs\DatabasePrototype\dbLib_Store\bin\Debug\dbLib_Store.exe
+D:\Dropbox\Projects\VB\Class Programs\DatabasePrototype\dbLib_Store\bin\Debug\dbLib_Store.pdb
+D:\Dropbox\Projects\VB\Class Programs\DatabasePrototype\dbLib_Store\bin\Debug\dbLib_Store.xml
+D:\Dropbox\Projects\VB\Class Programs\DatabasePrototype\dbLib_Store\bin\Debug\dbLib.dll
+D:\Dropbox\Projects\VB\Class Programs\DatabasePrototype\dbLib_Store\bin\Debug\dbLib.pdb
+D:\Dropbox\Projects\VB\Class Programs\DatabasePrototype\dbLib_Store\bin\Debug\dbLib.xml
+D:\Dropbox\Projects\VB\Class Programs\DatabasePrototype\dbLib_Store\obj\x86\Debug\dbLib_Store.vbprojResolveAssemblyReference.cache
+D:\Dropbox\Projects\VB\Class Programs\DatabasePrototype\dbLib_Store\obj\x86\Debug\dbLib_Store.frmMain.resources
+D:\Dropbox\Projects\VB\Class Programs\DatabasePrototype\dbLib_Store\obj\x86\Debug\dbLib_Store.Resources.resources
+D:\Dropbox\Projects\VB\Class Programs\DatabasePrototype\dbLib_Store\obj\x86\Debug\dbLib_Store.vbproj.GenerateResource.Cache
+D:\Dropbox\Projects\VB\Class Programs\DatabasePrototype\dbLib_Store\obj\x86\Debug\dbLib_Store.exe
+D:\Dropbox\Projects\VB\Class Programs\DatabasePrototype\dbLib_Store\obj\x86\Debug\dbLib_Store.xml
+D:\Dropbox\Projects\VB\Class Programs\DatabasePrototype\dbLib_Store\obj\x86\Debug\dbLib_Store.pdb
