@@ -346,7 +346,7 @@ Public Class dbManager
         Dim result As String = ""
 
         For Each column As dbTableField In columns.Items
-            result = column.Name & "='" & column.Value & "',"
+            result &= column.Name & "='" & column.Value & "',"
         Next
 
         Return result.Substring(0, result.Length - 1)
