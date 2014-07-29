@@ -303,7 +303,7 @@ Public Class dbManager
                     fields = ""
 
                     For Each column As String In columns
-                        fields = column & ","
+                        fields &= column & ","
                     Next
 
                     'Snip off the end
