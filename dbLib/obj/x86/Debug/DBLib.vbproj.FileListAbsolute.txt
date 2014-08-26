@@ -18,3 +18,13 @@ D:\Dropbox\Projects\VB\Class Programs\DatabasePrototype\dbLib\obj\x86\Debug\dbLi
 D:\Dropbox\Projects\VB\Class Programs\DatabasePrototype\dbLib\obj\x86\Debug\dbLib.dll
 D:\Dropbox\Projects\VB\Class Programs\DatabasePrototype\dbLib\obj\x86\Debug\dbLib.xml
 D:\Dropbox\Projects\VB\Class Programs\DatabasePrototype\dbLib\obj\x86\Debug\dbLib.pdb
+D:\Dropbox\Projects\VB\Class Programs\dbLib\dbLib\bin\Debug\dbLib.dll
+D:\Dropbox\Projects\VB\Class Programs\dbLib\dbLib\bin\Debug\dbLib.pdb
+D:\Dropbox\Projects\VB\Class Programs\dbLib\dbLib\bin\Debug\dbLib.xml
+D:\Dropbox\Projects\VB\Class Programs\dbLib\dbLib\obj\x86\Debug\Interop.ADOX.dll
+D:\Dropbox\Projects\VB\Class Programs\dbLib\dbLib\obj\x86\Debug\dbLib.vbproj.ResolveComReference.cache
+D:\Dropbox\Projects\VB\Class Programs\dbLib\dbLib\obj\x86\Debug\dbLib.Resources.resources
+D:\Dropbox\Projects\VB\Class Programs\dbLib\dbLib\obj\x86\Debug\dbLib.vbproj.GenerateResource.Cache
+D:\Dropbox\Projects\VB\Class Programs\dbLib\dbLib\obj\x86\Debug\dbLib.dll
+D:\Dropbox\Projects\VB\Class Programs\dbLib\dbLib\obj\x86\Debug\dbLib.xml
+D:\Dropbox\Projects\VB\Class Programs\dbLib\dbLib\obj\x86\Debug\dbLib.pdb

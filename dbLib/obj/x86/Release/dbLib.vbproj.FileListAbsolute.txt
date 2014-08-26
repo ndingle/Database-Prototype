@@ -1,0 +1,10 @@
+D:\Dropbox\Projects\VB\Class Programs\dbLib\dbLib\bin\Release\dbLib.dll
+D:\Dropbox\Projects\VB\Class Programs\dbLib\dbLib\bin\Release\dbLib.pdb
+D:\Dropbox\Projects\VB\Class Programs\dbLib\dbLib\bin\Release\dbLib.xml
+D:\Dropbox\Projects\VB\Class Programs\dbLib\dbLib\obj\x86\Release\Interop.ADOX.dll
+D:\Dropbox\Projects\VB\Class Programs\dbLib\dbLib\obj\x86\Release\dbLib.vbproj.ResolveComReference.cache
+D:\Dropbox\Projects\VB\Class Programs\dbLib\dbLib\obj\x86\Release\dbLib.Resources.resources
+D:\Dropbox\Projects\VB\Class Programs\dbLib\dbLib\obj\x86\Release\dbLib.vbproj.GenerateResource.Cache
+D:\Dropbox\Projects\VB\Class Programs\dbLib\dbLib\obj\x86\Release\dbLib.dll
+D:\Dropbox\Projects\VB\Class Programs\dbLib\dbLib\obj\x86\Release\dbLib.xml
+D:\Dropbox\Projects\VB\Class Programs\dbLib\dbLib\obj\x86\Release\dbLib.pdb

@@ -288,7 +288,22 @@ Public Class dbManager
     End Function
 
 
-    Function GetRows(table As String, Optional columns As List(Of String) = Nothing, Optional condition As String = "") As OleDbDataReader
+    Function GetLastID(ByVal table As String, ByVal idField As String)
+
+        Dim q As String = "SELECT TOP 1 * FROM " & table & " ORDER BY " & idField & " DESC"
+
+        'Execute the sql
+        OpenConnection()
+        Dim cmd As New OleDb.OleDbCommand(q, _connection)
+        Dim result As OleDbDataReader = cmd.ExecuteReader()
+        result.Read()
+
+        Return result("id")
+
+    End Function
+
+
+    Function GetRows(ByVal table As String, Optional ByVal columns As List(Of String) = Nothing, Optional ByVal condition As String = "") As OleDbDataReader
 
         'Ensure we have all the data to start with
         If table.Trim.Length > 0 Then
@@ -407,7 +422,7 @@ Public Class dbManager
     End Function
 
 
-    Function DeleteRow(table As String, whereClause As String) As Boolean
+    Function DeleteRow(ByVal table As String, ByVal whereClause As String) As Boolean
 
         If table.Trim.Length > 0 And whereClause.Trim.Length > 0 Then
 
@@ -438,7 +453,7 @@ Public Class dbManager
     End Function
 
 
-    Function DeleteTable(table As String) As Boolean
+    Function DeleteTable(ByVal table As String) As Boolean
 
         'Check if we have a table
         If table.Trim.Length > 0 Then

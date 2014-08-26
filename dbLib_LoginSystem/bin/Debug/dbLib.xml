@@ -6,20 +6,7 @@ dbLib
 </name>
 </assembly>
 <members>
-<member name="P:dbLib.My.Resources.Resources.ResourceManager">
-	<summary>
-  Returns the cached ResourceManager instance used by this class.
-</summary>
-</member><member name="P:dbLib.My.Resources.Resources.Culture">
-	<summary>
-  Overrides the current thread's CurrentUICulture property for all
-  resource lookups using this strongly typed resource class.
-</summary>
-</member><member name="T:dbLib.My.Resources.Resources">
-	<summary>
-  A strongly-typed resource class, for looking up localized strings, etc.
-</summary>
-</member><member name="P:dbLib.dbFields.Item(System.Int32)">
+<member name="P:dbLib.dbFields.Item(System.Int32)">
 	<summary>
  Readonly property returns a dbTableField by index
  </summary>
@@ -33,6 +20,19 @@ dbLib
  It's can be used for adding tables, viewing data from tables and more.
  </summary>
 	<remarks>Uses a list of dbTableField</remarks>
+</member><member name="P:dbLib.My.Resources.Resources.ResourceManager">
+	<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member><member name="P:dbLib.My.Resources.Resources.Culture">
+	<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member><member name="T:dbLib.My.Resources.Resources">
+	<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
 </member>
 </members>
 </doc>
