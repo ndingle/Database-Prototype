@@ -246,7 +246,9 @@ Public Class dbManager
 
         'Go through the columns
         For Each column As dbTableField In fields.Items
-            result &= "'" & column.Value & "',"
+            Dim value As String = column.Value
+            value = value.Replace("'", "''")
+            result &= "'" & value & "',"
         Next
 
         Return result.Substring(0, result.Length - 1)
@@ -361,7 +363,9 @@ Public Class dbManager
         Dim result As String = ""
 
         For Each column As dbTableField In columns.Items
-            result &= column.Name & "='" & column.Value & "',"
+            Dim value As String = column.Value
+            value = value.Replace("'", "''")
+            result &= column.Name & "='" & value & "',"
         Next
 
         Return result.Substring(0, result.Length - 1)
